@@ -2,29 +2,29 @@ let particles = [];
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    let numOfParticles = 16;
+    let numOfParticles = 100;
     for (let i = 0; i < numOfParticles; i++) {
         particles.push(new Particle());
     }
 }
 
 function draw() {
-    background(20);
+    background('black');
     particles.forEach(drawParticle);
-
-    function drawParticle(particle, index, particles) {
-        particle.update();
-        particle.draw();
-        particle.addStringToParticles(particles.slice(index));
-    };
 }
 
-class Particle {
+function drawParticle(particle, index, particles) {
+    particle.update();
+    particle.draw();
+    particle.addStringToParticles(particles.slice(index));
+};
 
+class Particle {
     constructor() {
         this.pos = createVector(random(width), random(height));
         this.vel = createVector(random(-2, 2), random(-2, 2));
         this.size = 10;
+        this.clr = 'white';
     }
 
     update() {
@@ -34,7 +34,7 @@ class Particle {
 
     draw() {
         noStroke();
-        // fill('rgba(255, 255, 255, 0.5)');    //   comment
+        fill(this.clr);
         circle(this.pos.x, this.pos.y, this.size);
     }
 
@@ -48,6 +48,22 @@ class Particle {
         }
     }
 
+    // addStringToParticles(particles) {
+    //     let maxStringLenght = 100;
+    //     particles.forEach(checkDistance);
+
+    //     function checkDistance(particle, index, particles) {
+
+    //         let d = dist(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y);
+    //         if (d < maxStringLenght) {
+    //             this.clr = 'yellow';
+    //             stroke(this.clr);
+    //             strokeWeight(1);
+    //             line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y)
+    //         }
+    //     };
+    // }
+
     addStringToParticles(particles) {
         let maxStringLenght = 150;
         particles.forEach(particle => {
@@ -56,11 +72,8 @@ class Particle {
                 stroke(255, 0, 0);
                 strokeWeight(1);
                 line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y)
-            } else if (d < 250) {
-                stroke(255, 255, 0);
-                strokeWeight(1);
-                line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y)
             }
         });
     }
+
 }
