@@ -9,7 +9,7 @@ function setup() {
 }
 
 function draw() {
-    background('black');
+    background('yellow');
     particles.forEach(drawParticle);
 }
 
