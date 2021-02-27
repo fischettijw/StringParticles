@@ -2,7 +2,7 @@ let particles = [];
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    let numOfParticles = 100;
+    let numOfParticles = 64;
     for (let i = 0; i < numOfParticles; i++) {
         particles.push(new Particle());
     }
@@ -15,17 +15,17 @@ function draw() {
 
 function drawParticle(particle, index, particles) {
     particle.update();
-    particle.addStringToParticles(particles);
+    particle.addStringToParticles(particles, this);
+    // particle.addStringToParticles(particles.slice(index)); //    more efficient
     particle.draw();
-    // particle.addStringToParticles(particles.slice(index));    more efficient
 };
 
 class Particle {
     constructor() {
         this.pos = createVector(random(width), random(height));
-        this.vel = createVector(random(-2, 2), random(-2, 2));
+        this.vel = createVector(random(-1, 1), random(-1, 1));
         this.size = 10;
-        this.particleColor = 'yellow';
+        // this.particleColor = 'yellow';
         this.particleColor = color(random(255), random(255), random(255));
     }
 
@@ -50,19 +50,30 @@ class Particle {
         }
     }
 
-    addStringToParticles(particles) {
-        let maxStringLenght = 100;
+    // addStringToParticles(particles) {
+    //     let maxStringLenght = 150;
+    //     let lineColor = 'red';
+    //     particles.forEach(particle => {
+    //         let d = dist(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y);
+    //         if (d < maxStringLenght) {
+    //             stroke(this.particleColor);
+    //             strokeWeight(1);
+    //             line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y);
+    //         }
+    //     });
+    // }
+
+    addStringToParticles(particles, me) {
+        let maxStringLenght = 75;
         let lineColor = 'red';
-        particles.forEach(particle => {
-            let d = dist(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y);
+        for (let i = 0; i < particles.length; i++) {
+            let d = dist(this.pos.x, this.pos.y, particles[i].pos.x, particles[i].pos.y);
             if (d < maxStringLenght) {
                 stroke(this.particleColor);
-                // stroke(lineColor);
                 strokeWeight(1);
-                line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y);
-                // this.draw();
+                line(this.pos.x, this.pos.y, particles[i].pos.x, particles[i].pos.y);
             }
-        });
+        };
     }
 
 }
