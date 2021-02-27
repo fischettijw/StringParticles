@@ -64,7 +64,7 @@ class Particle {
     // }
 
     addStringToParticles(particles, me) {
-        let maxStringLenght = 25;
+        let maxStringLenght = 75;
         let lineColor = 'red';
         for (let i = 0; i < particles.length; i++) {
             let d = dist(this.pos.x, this.pos.y, particles[i].pos.x, particles[i].pos.y);
